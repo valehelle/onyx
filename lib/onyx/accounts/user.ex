@@ -2,6 +2,7 @@ defmodule Onyx.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
   alias Comeonin.Bcrypt
+  alias Onyx.Reservertion.Reservation
 
   schema "users" do
     field :username, :string
@@ -9,7 +10,7 @@ defmodule Onyx.Accounts.User do
     field :email, :string
     field :password, :string
     field :slot_limit, :integer
-
+    has_many :reservations, Reservation 
     timestamps()
   end
 

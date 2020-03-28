@@ -49,11 +49,27 @@ defmodule Onyx.Reservertion do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_reservation(attrs \\ %{}) do
+  def create_reservation(user, reservation) do
+    attrs = %{
+      "user_id" => user.id,
+      "ref" => "random ref",
+
+    } |> Map.merge(reservation)
     %Reservation{}
     |> Reservation.changeset(attrs)
     |> Repo.insert()
   end
+
+  def get_total_slot_taken(user_id, %{"reserved_at" => reserved_at, "slot" => slot}) do
+    query = from r in Reservation,
+            where: r.user_id == ^user_id,
+            where: r.reserved_at == ^reserved_at,
+            where: r.slot == ^slot
+
+    IO.inspect Repo.all(query)
+  end
+
+  
 
   @doc """
   Updates a reservation.

@@ -26,6 +26,7 @@ defmodule OnyxWeb.Router do
 
     get "/", PageController, :index
     get "/reservation/:username", ReservationController, :new
+    post "/reservation/:username", ReservationController, :create
     get "/users/sign_up", UserController, :register
     post "/users/sign_up", UserController, :register_user
     get "/users/sign_in", UserController, :index

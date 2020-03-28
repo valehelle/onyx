@@ -1,7 +1,7 @@
 defmodule Onyx.Reservertion.Reservation do
   use Ecto.Schema
   import Ecto.Changeset
-
+  alias Onyx.Accounts.User
   schema "reservations" do
     field :email, :string
     field :has_entered, :boolean, default: false
@@ -10,7 +10,7 @@ defmodule Onyx.Reservertion.Reservation do
     field :reserved_at, :string
     field :slot, :integer
 
-    belongs_to :user, Onyx.Accounts.User
+    belongs_to :user, User 
 
     timestamps()
   end
@@ -18,7 +18,7 @@ defmodule Onyx.Reservertion.Reservation do
   @doc false
   def changeset(reservation, attrs) do
     reservation
-    |> cast(attrs, [:name, :email, :slot, :reserved_at, :ref, :has_entered])
-    |> validate_required([:name, :email, :slot, :reserved_at, :ref, :has_entered])
+    |> cast(attrs, [:name, :email, :slot, :reserved_at, :ref, :has_entered, :user_id])
+    |> validate_required([:name, :email, :slot, :reserved_at, :ref, :has_entered, :user_id])
   end
 end
