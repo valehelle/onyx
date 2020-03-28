@@ -25,7 +25,7 @@ defmodule OnyxWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-
+    get "/reservation/:username", ReservationController, :new
     get "/users/sign_up", UserController, :register
     post "/users/sign_up", UserController, :register_user
     get "/users/sign_in", UserController, :index
@@ -42,5 +42,6 @@ defmodule OnyxWeb.Router do
   scope "/", OnyxWeb do
     pipe_through [:browser, :auth, :ensure_auth]
     get "/dashboard", PageController, :dashboard
+    
   end
 end

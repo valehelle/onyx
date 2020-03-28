@@ -4,7 +4,8 @@ defmodule Onyx.Accounts.User do
   alias Comeonin.Bcrypt
 
   schema "users" do
-    field :name, :string
+    field :username, :string
+    field :company_name, :string
     field :email, :string
     field :password, :string
     field :slot_limit, :integer
@@ -15,10 +16,12 @@ defmodule Onyx.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :name, :password, :slot_limit])
-    |> validate_required([:email, :name, :password])
+    |> cast(attrs, [:email, :username, :password, :slot_limit, :company_name])
+    |> validate_required([:email, :username, :password, :company_name])
     |> validate_format(:email, ~r/@/)
+    |> validate_format(:username, ~r/^\S*$/)
     |> unique_constraint(:email, [name: :users_email_index])
+    |> unique_constraint(:username, [name: :users_username_index])
     |> put_pass_hash()
   end
 

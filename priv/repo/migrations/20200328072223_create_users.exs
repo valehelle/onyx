@@ -3,16 +3,16 @@ defmodule Onyx.Repo.Migrations.CreateUsers do
 
   def change do
     create table(:users) do
-      add :name, :string
+      add :username, :string
+      add :company_name, :string
       add :email, :string
       add :password, :string
       add :slot_limit, :integer
       timestamps()
     end
-
-  end
-
-  def change do
     create unique_index(:users, :email)
+    create unique_index(:users, :username)
+
   end
+
 end
