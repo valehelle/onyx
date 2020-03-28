@@ -19,11 +19,12 @@ defmodule OnyxWeb.ReservationController do
       changeset = Reservation.changeset(%Reservation{}, reservation)
       total_slot_taken = Reservertion.get_total_slot_taken(user.id, reservation) |> length
       available_slot = user.slot_limit - total_slot_taken
-      IO.inspect total_slot_taken
       case available_slot > 0 do
       true -> 
-        Reservertion.create_reservation(user, reservation)
-        render(conn, "new.html", changeset: changeset, username: username, full: false)
+        case Reservertion.create_reservation(user, reservation) do
+          {:ok, _} -> render(conn, "new.html", changeset: changeset, username: username, full: false)
+          {:error, error_changeset} -> render(conn, "new.html", changeset: error_changeset, username: username, full: false)
+        end
       false -> 
         render(conn, "new.html", changeset: changeset, username: username, full: true)
       end

@@ -66,7 +66,7 @@ defmodule Onyx.Reservertion do
             where: r.reserved_at == ^reserved_at,
             where: r.slot == ^slot
 
-    IO.inspect Repo.all(query)
+    Repo.all(query)
   end
 
   
