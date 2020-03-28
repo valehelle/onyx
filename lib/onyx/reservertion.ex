@@ -52,8 +52,7 @@ defmodule Onyx.Reservertion do
   def create_reservation(user, reservation) do
     attrs = %{
       "user_id" => user.id,
-      "ref" => "random ref",
-
+      "ref" => randomizer(5),
     } |> Map.merge(reservation)
     %Reservation{}
     |> Reservation.changeset(attrs)
@@ -117,4 +116,26 @@ defmodule Onyx.Reservertion do
   def change_reservation(%Reservation{} = reservation) do
     Reservation.changeset(reservation, %{})
   end
+
+
+  def randomizer(length, type \\ :all) do
+    alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+    lists = alphabets <> String.downcase(alphabets) |> String.split("", trim: true)
+
+    do_randomizer(length, lists)
+  end
+
+  @doc false
+  defp get_range(length) when length > 1, do: (1..length)
+  defp get_range(length), do: [1]
+
+  @doc false
+  defp do_randomizer(length, lists) do
+    get_range(length)
+    |> Enum.reduce([], fn(_, acc) -> [Enum.random(lists) | acc] end)
+    |> Enum.join("")
+  end
+
+
 end
