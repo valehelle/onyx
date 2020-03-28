@@ -29,6 +29,6 @@
 
 <script>
 var dNow = new Date();
-var s = dNow.getDate() + '/' + (dNow.getMonth() + 1) + '/' + dNow.getFullYear();
+var s = dNow.getDate() + '-' + (dNow.getMonth() + 1) + '-' + dNow.getFullYear();
  document.getElementById("reservation_reserved_at").value = s; 
 </script>

@@ -35,8 +35,9 @@ defmodule Onyx.Reservertion do
       ** (Ecto.NoResultsError)
 
   """
-  def get_reservation!(id), do: Repo.get!(Reservation, id)
-
+  def get_reservation(user_id, reserved_at, slot, ref) do
+    Repo.get_by!(Reservation, user_id: user_id, reserved_at: reserved_at, slot: slot, ref: ref)
+  end
   @doc """
   Creates a reservation.
 
@@ -49,10 +50,10 @@ defmodule Onyx.Reservertion do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_reservation(user, reservation) do
+  def create_reservation(user, %{"slot" => slot} = reservation) do
     attrs = %{
       "user_id" => user.id,
-      "ref" => randomizer(5),
+      "ref" => "#{slot}-#{randomizer(5)}",
     } |> Map.merge(reservation)
     %Reservation{}
     |> Reservation.changeset(attrs)

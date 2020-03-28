@@ -1,0 +1,4 @@
+<h2>SUCCESS</h2>
+<%= @user.company_name %>
+
+ <img src="https://api.qrserver.com/v1/create-qr-code/?size=550x550&data=<%= @reservation.ref %>" alt="Smiley face" height="350" width="350"> 

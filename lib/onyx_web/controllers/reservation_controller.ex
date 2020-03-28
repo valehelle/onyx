@@ -22,12 +22,22 @@ defmodule OnyxWeb.ReservationController do
       case available_slot > 0 do
       true -> 
         case Reservertion.create_reservation(user, reservation) do
-          {:ok, _} -> render(conn, "new.html", changeset: changeset, username: username, full: false)
+          {:ok, res} ->  redirect(conn, to: Routes.reservation_path(conn, :show, username, res.reserved_at, res.ref))
           {:error, error_changeset} -> render(conn, "new.html", changeset: error_changeset, username: username, full: false)
         end
       false -> 
         render(conn, "new.html", changeset: changeset, username: username, full: true)
       end
     end
+  end
+  def show(conn, %{"username" => username, "reserved_at" => reserved_at, "ref_id" => ref_id}) do
+    [slot, ref] = String.split(ref_id, "-")
+    {slot, _} = Integer.parse(slot)
+    user = Accounts.get_user_by_username(username)
+    case Reservertion.get_reservation(user.id, reserved_at, slot, ref_id) do
+      nil -> render(conn, "error.html")
+      reservation -> render(conn, "show.html", reservation: reservation, user: user)
+    end
+    
   end
 end
