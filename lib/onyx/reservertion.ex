@@ -36,8 +36,9 @@ defmodule Onyx.Reservertion do
 
   """
   def get_reservation(user_id, reserved_at, slot, ref) do
-    Repo.get_by!(Reservation, user_id: user_id, reserved_at: reserved_at, slot: slot, ref: ref)
+    Repo.get_by(Reservation, user_id: user_id, reserved_at: reserved_at, slot: slot, ref: ref)
   end
+  
   @doc """
   Creates a reservation.
 

@@ -40,11 +40,36 @@ defmodule OnyxWeb.ReservationController do
     end
   end
   def scan(conn, %{"username" => username}) do
-
-    render(conn, "scan.html", username: username)
+    user = Guardian.Plug.current_resource(conn)
+    render(conn, "scan.html", username: user.username)
   end
-  def check_scan(conn, %{"username" => username, "reservation" => reservation}) do
+  def auto_scan(conn, %{"username" => username}) do
+    user = Guardian.Plug.current_resource(conn)
+    render(conn, "auto_scan.html", username: user.username)
+  end
 
-    render(conn, "scan.html")
+  def check_scan(conn, %{"username" => username, "reservation" => %{"ref" => ref_id, "reserved_at" => reserved_at, "slot" => current_slot}}) do
+    user = Guardian.Plug.current_resource(conn)
+    case user.username === username do
+      true ->
+        [slot, ref] = String.split(ref_id, "-")
+        {slot, _} = Integer.parse(slot)
+        {current_slot, _} = Integer.parse(current_slot)
+        case current_slot === slot do
+          true ->
+            case Reservertion.get_reservation(user.id, reserved_at, slot, ref_id) do
+              nil -> render(conn, "not_found.html")
+              reservation -> 
+              Reservertion.update_reservation(reservation, %{"has_entered" => true})
+              render(conn, "success.html", reservation: reservation, user: user)
+            end
+          false ->
+            render(conn, "error-slot.html", user: user)
+        end
+
+      false ->
+
+      render(conn, "error.html")
+    end
   end
 end

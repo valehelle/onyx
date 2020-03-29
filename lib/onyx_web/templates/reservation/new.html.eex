@@ -9,10 +9,12 @@
             "9am - 10am": 1, 
             "10am - 11am": 2, 
             "11am - 12pm": 3, 
-            "1pm - 2pm": 4, 
-            "3pm - 4pm": 5, 
-            "4pm - 5pm": 6, 
-            "5pm - 6pm": 7, 
+            "12pm - 1pm": 4, 
+            "1pm - 2pm": 5, 
+            "2pm - 3pm": 6,
+            "3pm - 4pm": 7, 
+            "4pm - 5pm": 8, 
+            "5pm - 6pm": 9, 
             ], style: "display: block") %>
     </div>
     <input type="hidden" id="reservation_reserved_at" name="reservation[reserved_at]" >
