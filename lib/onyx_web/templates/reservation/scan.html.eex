@@ -1,0 +1,10 @@
+<%= form_for @conn, Routes.reservation_path(@conn, :check_scan, @username), [as: :reservation], fn f -> %>
+  <%= text_input f, :ref %>
+   <%= text_input f, :reserved_at, style: "visibility: hidden" %>
+  <%= submit "Search" %>
+<% end %>
+<script>
+var dNow = new Date();
+var s = dNow.getDate() + '-' + (dNow.getMonth() + 1) + '-' + dNow.getFullYear();
+ document.getElementById("reserved_at").value = s; 
+</script>

@@ -44,6 +44,8 @@ defmodule OnyxWeb.Router do
   scope "/", OnyxWeb do
     pipe_through [:browser, :auth, :ensure_auth]
     get "/dashboard", PageController, :dashboard
+    get "/reservation/:username/scan", ReservationController, :scan
+    post "/reservation/:username/scan", ReservationController, :check_scan
     
   end
 end

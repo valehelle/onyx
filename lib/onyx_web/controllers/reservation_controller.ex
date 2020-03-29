@@ -38,6 +38,13 @@ defmodule OnyxWeb.ReservationController do
       nil -> render(conn, "error.html")
       reservation -> render(conn, "show.html", reservation: reservation, user: user)
     end
-    
+  end
+  def scan(conn, %{"username" => username}) do
+
+    render(conn, "scan.html", username: username)
+  end
+  def check_scan(conn, %{"username" => username, "reservation" => reservation}) do
+
+    render(conn, "scan.html")
   end
 end
