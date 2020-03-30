@@ -34,9 +34,9 @@
                 <h6>Number of person allowed per hour: </h6>
                 <h6><%= @user.slot_limit %></h6>
             </div>
-            <div style="margin-top: 20px;">
-                <%= link("Manual Check In", to: Routes.reservation_path(@conn, :scan, @user.username), class: "waves-effect waves-light btn green") %>
-                <%= link("QR Code Check In", to: Routes.reservation_path(@conn, :auto_scan, @user.username), class: "waves-effect waves-light btn green") %>
+            <div >
+                <%= link("Manual Check In", to: Routes.reservation_path(@conn, :scan, @user.username), class: "waves-effect waves-light btn green",  style: "margin-top: 20px;")%>
+                <%= link("QRCode Check In", to: Routes.reservation_path(@conn, :auto_scan, @user.username), class: "waves-effect waves-light btn green",  style: "margin-top: 20px;") %>
             </div>
       </div>
 </div>

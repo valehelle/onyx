@@ -51,6 +51,7 @@ var slot = {
     16: 8,
     17: 9
 }
-var currentSlot = slot[dNow.getHours()]
+var currentSlot = slot[dNow.getHours()] == undefined ? 19 : slot[dNow.getHours()]
+
 document.getElementById("reservation_slot").value = currentSlot; 
 </script>

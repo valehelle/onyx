@@ -11,8 +11,10 @@
         <h6>Name: <%= @reservation.name %></h6>
         <h6>Email: <%= @reservation.email %></h6>
         <h6>Reference Number: <%= @reservation.ref %></h6>
+        <h6>Reserved Date: <%= @reservation.reserved_at %></h6>
+        <h6>Reserved Time: <%= @time %></h6>
         <div style="margin-top: 20px;">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=550x550&data=<%= @reservation.ref %>" alt="Smiley face" height="auto" width="100%"> 
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=550x550&data=<%= @reservation.ref %>" alt="Smiley face" height="auto" width="80%"> 
         </div>
         <h6>Please save this page for check in.</h6>
       </div>

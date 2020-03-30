@@ -37,7 +37,21 @@ defmodule OnyxWeb.ReservationController do
     user = Accounts.get_user_by_username(username)
     case Reservertion.get_reservation(user.id, reserved_at, slot, ref_id) do
       nil -> render(conn, "error.html")
-      reservation -> render(conn, "show.html", reservation: reservation, user: user)
+      reservation -> 
+      slot = reservation.slot
+      slot_time = %{
+        1 => "9am - 10am",
+        2 => "10am - 11am",
+        3 => "11am - 12pm",
+        4 => "12pm - 1pm",
+        5 => "1pm - 2pm",
+        6 => "2pm - 3pm",
+        7 => "3pm - 4pm",
+        8 => "4pm - 5pm",
+        9 => "5pm - 6pm",
+        }
+      time = Map.get(slot_time, reservation.slot)
+      render(conn, "show.html", reservation: reservation, user: user, time: time)
     end
   end
   def scan(conn, %{"username" => username}) do
