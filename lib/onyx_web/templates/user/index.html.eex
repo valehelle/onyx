@@ -17,7 +17,7 @@
                 <%= password_input f, :password %>
                 <%= error_tag f, :password %>
               </div>
-              <h6 style = "color:black; font-size: 9pt">New to Reservation? 
+              <h6 style = "color:black; font-size: 9pt">New to Tempah? 
               <%= link("SIGN UP", to: Routes.user_path(@conn, :register)) %>
             </h6>
               <div>

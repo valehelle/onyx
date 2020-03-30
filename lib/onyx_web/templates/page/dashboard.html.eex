@@ -1,6 +1,6 @@
   <nav>
     <div class="nav-wrapper deep-purple">
-      <a href="/dashboard" class="brand-logo left">Reserved</a>
+      <a href="/dashboard" class="brand-logo left">Tempah</a>
       <ul id="nav-mobile" class="right">
         <li>
         <%= button("Logout", to: Routes.user_path(@conn, :logout), style: 
