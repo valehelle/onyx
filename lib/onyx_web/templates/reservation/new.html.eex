@@ -1,33 +1,52 @@
-<h2>Reservation</h2>
-<%= if @full do %>
-    <h1>The selected time is fully booked</h1>
-<% end %>
-<%= form_for @changeset, Routes.reservation_path(@conn, :create, @username), fn f -> %>
-    <%= label f, :slot, class: "control-label" %>
-    <div class = "input-field">
-        <%= select(f, :slot, [
-            "9am - 10am": 1, 
-            "10am - 11am": 2, 
-            "11am - 12pm": 3, 
-            "12pm - 1pm": 4, 
-            "1pm - 2pm": 5, 
-            "2pm - 3pm": 6,
-            "3pm - 4pm": 7, 
-            "4pm - 5pm": 8, 
-            "5pm - 6pm": 9, 
-            ], style: "display: block") %>
+<nav>
+    <div class="nav-wrapper deep-purple">
+      <a href="/" class="brand-logo left">Reserved</a>
     </div>
-    <input type="hidden" id="reservation_reserved_at" name="reservation[reserved_at]" >
-    <%= label f, :name, class: "control-label" %>
-    <%= text_input f, :name, class: "form-control" %>
-    <%= error_tag f, :name %>
+  </nav>
+<div class = "container">
+  <div class="row">
+      <div class="col s12">
+      <h4>Reservation</h4>
+      <h5><%= @user.company_name %></h5>
+        <%= form_for @conn, Routes.reservation_path(@conn, :create, @username), [as: :reservation], fn f -> %>
+        <%= if @full do %>
+            <h6 style="color: red">The selected time is fully booked</h6>
+        <% end %>
+        <%= label f, :slot, class: "control-label" %>
+        <div class = "input-field">
+            <%= select(f, :slot, [
+                "9am - 10am": 1, 
+                "10am - 11am": 2, 
+                "11am - 12pm": 3, 
+                "12pm - 1pm": 4, 
+                "1pm - 2pm": 5, 
+                "2pm - 3pm": 6,
+                "3pm - 4pm": 7, 
+                "4pm - 5pm": 8, 
+                "5pm - 6pm": 9, 
+                ], style: "display: block") %>
+        </div>
+        <input type="hidden" id="reservation_reserved_at" name="reservation[reserved_at]" >
+        <div class="input-field" style="margin-top: 30px;">
+            <%= label f, :name, class: "control-label" %>
+            <%= text_input f, :name, class: "form-control" %>
+            <%= error_tag f, :name %>
+        </div>
+        <div class="input-field">
+            <%= label f, :email, class: "control-label" %>
+            <%= text_input f, :email, class: "form-control" %>
+            <%= error_tag f, :email %>
+        </div>
+        <%= submit "Reserve", class: "waves-effect waves-light btn green"%>
+        <% end %>
+    </div>
+  </div>
+</div>
 
-    <%= label f, :email, class: "control-label" %>
-    <%= text_input f, :email, class: "form-control" %>
-    <%= error_tag f, :email %>
-    
-    <%= submit "Submit", class: "btn btn-primary" %>
-<% end %>
+
+
+
+
 
 <script>
 var dNow = new Date();

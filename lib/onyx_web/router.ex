@@ -22,7 +22,7 @@ defmodule OnyxWeb.Router do
   end
 
   scope "/", OnyxWeb do
-    pipe_through :browser
+    pipe_through [:browser, :auth]
 
     get "/", PageController, :index
     get "/reservation/:username", ReservationController, :new

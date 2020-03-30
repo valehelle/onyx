@@ -1,4 +1,23 @@
-<h2>SUCCESS</h2>
-<%= @user.company_name %>
+  <nav>
+    <div class="nav-wrapper deep-purple">
+      <a href="/" class="brand-logo left">Reserved</a>
+    </div>
+  </nav>
+  <div class = "container">
+  <div class="row">
+      <div class="col s12">
+        <h4>Success</h4>
+        <h6><%= @user.company_name %></h6>
+        <h6>Name: <%= @reservation.name %></h6>
+        <h6>Email: <%= @reservation.email %></h6>
+        <h6>Reference Number: <%= @reservation.ref %></h6>
+        <div style="margin-top: 20px;">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=550x550&data=<%= @reservation.ref %>" alt="Smiley face" height="auto" width="100%"> 
+        </div>
+        <h6>Please save this page for check in.</h6>
+      </div>
+  </div>
+</div>
 
- <img src="https://api.qrserver.com/v1/create-qr-code/?size=550x550&data=<%= @reservation.ref %>" alt="Smiley face" height="350" width="350"> 
+
+

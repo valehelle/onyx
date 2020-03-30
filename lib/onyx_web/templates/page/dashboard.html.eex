@@ -1,17 +1,52 @@
+  <nav>
+    <div class="nav-wrapper deep-purple">
+      <a href="/dashboard" class="brand-logo left">Reserved</a>
+      <ul id="nav-mobile" class="right">
+        <li>
+        <%= button("Logout", to: Routes.user_path(@conn, :logout), style: 
+        "
+        background: none!important;
+        border: none;
+        /*optional*/
+        font-family: arial, sans-serif;
+        /*input has OS specific font-family*/
+        color: white;
+        cursor: pointer;
+        padding-right: 20px;
+        }
+        ") %>
+        </li>
+      </ul>
+    </div>
+  </nav>
+<div class = "container">
 <div class="row">
-<div style="background-color: red">
-     <div class="col s12">1</div>
-      <div class="col s1">2</div>
-      <div class="col s1">3</div>
-      <div class="col s1">4</div>
-      <div class="col s1">5</div>
-      <div class="col s1">6</div>
-      <div class="col s1">7</div>
-      <div class="col s1">8</div>
-      <div class="col s1">9</div>
-      <div class="col s1">10</div>
-      <div class="col s1">11</div>
-      <div class="col s1">12</div>
+      <div class="col s12">
+            <div>
+                <h3 id="time">sdfsdf</h3>
+                <h5 id="date">sdfsdf</h5>
+            </div>
+            <div class="z-depth-1" style="margin-top: 20px; padding:10px;">
+                <h6>Reservation URL: </h6>
+                <a href="<%= @path %>"><%= @path %></a>
+                <h6>Company Name: </h6>
+                <h6><%= @user.company_name %></h6>
+                <h6>Number of person allowed per hour: </h6>
+                <h6><%= @user.slot_limit %></h6>
+            </div>
+            <div style="margin-top: 20px;">
+                <%= link("Manual Check In", to: Routes.reservation_path(@conn, :scan, @user.username), class: "waves-effect waves-light btn green") %>
+                <%= link("QR Code Check In", to: Routes.reservation_path(@conn, :auto_scan, @user.username), class: "waves-effect waves-light btn green") %>
+            </div>
+      </div>
 </div>
+</div>
+<script>
+var dNow = new Date();
+var s = dNow.getDate() + '-' + (dNow.getMonth() + 1) + '-' + dNow.getFullYear();
+ document.getElementById("date").innerHTML = s; 
 
-</div>
+ var time = dNow.getHours() + ':' + dNow.getMinutes();
+  document.getElementById("time").innerHTML = time; 
+
+</script>

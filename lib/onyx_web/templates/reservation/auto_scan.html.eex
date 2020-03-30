@@ -1,39 +1,38 @@
 
 <script type="text/javascript" src="https://valehelle.github.io/CDN/js/jsqrscanner.nocache.js"></script>
-<h1>AUTO SCAN</h1>
 
-
-
-<div class="row-element-set row-element-set-QRScanner">
-      <h1>JsQRScanner example</h1>
-      <div class="row-element">
-        <div class="FlexPanel detailsPanel QRScannerShort">
-          <div class="FlexPanel shortInfoPanel">
-            <div class="gwt-HTML">
-              Point the webcam to a QR code.
-            </div>
-          </div>
-        </div>
-      </div>
-      <br>
-      <div class="row-element">
-        <div class="qrscanner" id="scanner">
-        <div><video class="qrPreviewVideo" autoplay="" src=""></video></div></div>
-      </div>
-      <div class="row-element">
-        <div class="form-field form-field-memo">
-          <div class="form-field-caption-panel">
-            <div class="gwt-Label form-field-caption">
-              Scanned text
-            </div>
-          </div>
-          <div class="FlexPanel form-field-input-panel">
-            <textarea id="scannedTextMemo" class="textInput form-memo form-field-input textInput-readonly" rows="3" readonly="">            </textarea>
-          </div>
-        </div>
-      </div>
-      <br>
+  <nav>
+    <div class="nav-wrapper deep-purple">
+      <a href="/dashboard" class="brand-logo left">Reserved</a>
+      <ul id="nav-mobile" class="right">
+        <li>
+        <%= button("Logout", to: Routes.user_path(@conn, :logout), style: 
+        "
+        background: none!important;
+        border: none;
+        /*optional*/
+        font-family: arial, sans-serif;
+        /*input has OS specific font-family*/
+        color: white;
+        cursor: pointer;
+        padding-right: 20px;
+        }
+        ") %>
+        </li>
+      </ul>
     </div>
+  </nav>
+
+<div class = "container">
+  <div class="row">
+      <div class="col s12">
+        <h2>QR CODE SCANNER</h2>
+        <div class="qrscanner" id="scanner">
+        </div>
+      </div>
+  </div>
+</div>
+
 
 
 <%= form_for @conn, Routes.reservation_path(@conn, :check_scan, @username), [as: :reservation], fn f -> %>
@@ -73,18 +72,13 @@ document.getElementById("reservation_slot").value = currentSlot;
  <script type="text/javascript">
     function onQRCodeScanned(scannedText)
     {
-      console.log(scannedText)
       if (scannedText == 'The request is not allowed by the user agent or the platform in the current context.'){
 
       }else{
         document.getElementById("reservation_ref").value = scannedText;
         document.getElementById("submitButton").click();
       }
-    	var scannedTextMemo = document.getElementById("scannedTextMemo");
-    	if(scannedTextMemo)
-    	{
-    		scannedTextMemo.value = scannedText;
-    	}
+
     }
     
     //funtion returning a promise with a video stream
@@ -129,6 +123,7 @@ document.getElementById("reservation_slot").value = currentSlot;
     	{
     	    //append the jbScanner to an existing DOM element
     		jbScanner.appendTo(scannerParentElement);
+        document.getElementsByClassName("qrPreviewVideo")[0].setAttribute("width", "100%");
     	}        
     }
   </script> 

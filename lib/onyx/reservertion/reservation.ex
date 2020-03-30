@@ -19,6 +19,7 @@ defmodule Onyx.Reservertion.Reservation do
   def changeset(reservation, attrs) do
     reservation
     |> cast(attrs, [:name, :email, :slot, :reserved_at, :ref, :has_entered, :user_id])
+    |> validate_format(:email, ~r/@/)
     |> validate_required([:name, :email, :slot, :reserved_at, :ref, :has_entered, :user_id])
   end
 end

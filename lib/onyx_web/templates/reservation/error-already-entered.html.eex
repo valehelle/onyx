@@ -23,7 +23,7 @@
   <div class="row">
       <div class="col s12">
         <h2>Fail</h2>
-        <h4>The current time does not match the reservation time.</h4>
+        <h4>The user has already check in.</h4>
         <div style="margin-top: 20px;">
                 <%= link("Manual Check In", to: Routes.reservation_path(@conn, :scan, @user.username), class: "waves-effect waves-light btn green") %>
                 <%= link("QR Code Check In", to: Routes.reservation_path(@conn, :auto_scan, @user.username), class: "waves-effect waves-light btn green") %>

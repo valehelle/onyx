@@ -9,7 +9,7 @@ defmodule OnyxWeb.ReservationController do
       nil -> redirect(conn, to: Routes.page_path(conn, :index))
       user -> 
       changeset = Reservation.changeset(%Reservation{}, %{})
-      render(conn, "new.html",changeset: changeset, username: username, full: false)
+      render(conn, "new.html",changeset: changeset, username: username, user: user, full: false)
     end
   end
   def create(conn, %{"username" => username, "reservation" => reservation}) do
@@ -23,10 +23,11 @@ defmodule OnyxWeb.ReservationController do
       true -> 
         case Reservertion.create_reservation(user, reservation) do
           {:ok, res} ->  redirect(conn, to: Routes.reservation_path(conn, :show, username, res.reserved_at, res.ref))
-          {:error, error_changeset} -> render(conn, "new.html", changeset: error_changeset, username: username, full: false)
+          {:error, error_changeset} ->
+           render(conn, "new.html", changeset: error_changeset, username: username, user: user, full: false)
         end
       false -> 
-        render(conn, "new.html", changeset: changeset, username: username, full: true)
+        render(conn, "new.html", changeset: changeset, username: username, user: user, full: true)
       end
     end
   end
@@ -50,26 +51,35 @@ defmodule OnyxWeb.ReservationController do
 
   def check_scan(conn, %{"username" => username, "reservation" => %{"ref" => ref_id, "reserved_at" => reserved_at, "slot" => current_slot}}) do
     user = Guardian.Plug.current_resource(conn)
-    case user.username === username do
-      true ->
-        [slot, ref] = String.split(ref_id, "-")
-        {slot, _} = Integer.parse(slot)
-        {current_slot, _} = Integer.parse(current_slot)
-        case current_slot === slot do
-          true ->
-            case Reservertion.get_reservation(user.id, reserved_at, slot, ref_id) do
-              nil -> render(conn, "not_found.html")
-              reservation -> 
-              Reservertion.update_reservation(reservation, %{"has_entered" => true})
-              render(conn, "success.html", reservation: reservation, user: user)
-            end
-          false ->
-            render(conn, "error-slot.html", user: user)
-        end
+    try do
+      case user.username === username do
+        true ->
+          [slot, ref] = String.split(ref_id, "-")
+          {slot, _} = Integer.parse(slot)
+          {current_slot, _} = Integer.parse(current_slot)
+          case current_slot === slot do
+            true ->
+              case Reservertion.get_reservation(user.id, reserved_at, slot, ref_id) do
+                nil -> render(conn, "not_found.html")
+                reservation -> 
+                case reservation.has_entered do
+                false -> 
+                  Reservertion.update_reservation(reservation, %{"has_entered" => true})
+                  render(conn, "success.html", reservation: reservation, user: user)
+                true -> 
+                  render(conn, "error-already-entered.html", user: user)
+                end
+              end
+            false ->
+              render(conn, "error-slot.html", user: user)
+          end
 
-      false ->
+        false ->
 
-      render(conn, "error.html")
+        render(conn, "error.html", user: user)
+      end
+    rescue
+      _ -> render(conn, "error.html", user: user)
     end
   end
 end
