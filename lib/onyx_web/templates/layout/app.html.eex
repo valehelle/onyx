@@ -16,10 +16,16 @@
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
   </head>
-  <body>
-    <main role="main" >
+  <body >
+    <main role="main" style="min-height: 95vh;">
       <%= render @view_module, @view_template, assigns %>
     </main>
+    <div class="footer-copyright" style="padding-top: 10px; padding-bottom: 10px;">
+          <div class="container">
+             Contact <a href="mailto:hazmiirfan92@gmail.com.com?Subject=Tempah" target="_top">hazmiirfan92@gmail.com</a> for more info.
+          </div>
+    </div>
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </body>
+
 </html>
